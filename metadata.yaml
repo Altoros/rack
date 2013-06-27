@@ -1,5 +1,4 @@
 name: rack
-subordinate: true
 summary: A modular Ruby webserver interface
 maintainer: Altoros Systems, Inc. <pavel.pachkovskij@altoros.com>
 description: |
