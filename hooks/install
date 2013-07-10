@@ -1,29 +1,10 @@
 #!/bin/bash
 set -e
 
-export HOME=/root
+source "$(dirname $0)/bootstrap"
 
-apt-get update
-apt-get install -y curl build-essential
+chef-solo -j chef-solo/install.json
 
-curl -L https://get.rvm.io | bash -s stable --ruby
-
-if ! grep -q 'source ~/.bash_profile' ~/.bashrc; then
-  echo 'source ~/.bash_profile' >> ~/.bashrc
-fi
-
-export PATH=$PATH:/usr/local/rvm/bin
-source /usr/local/rvm/scripts/rvm
-
-cd "$(dirname $0)" && bundle install
-
-mkdir -p /etc/chef
-[[ -a /etc/chef/solo.rb ]] || touch /etc/chef/solo.rb
-
-mkdir -p /var/chef
-cp -r chef/* /var/chef
-
-chef-solo -j solo.json
 #
 # source "$(dirname $0)/common.sh"
 

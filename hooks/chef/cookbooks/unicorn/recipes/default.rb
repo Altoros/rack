@@ -2,6 +2,12 @@ gem_package 'unicorn' do
 	action :install
 end
 
+directory '/etc/unicorn/' do
+	owner 'root'
+	group 'root'
+	action :create
+end
+
 template '/etc/init.d/unicorn' do
 	source 'unicorn'
 	mode '0755'
@@ -9,36 +15,34 @@ template '/etc/init.d/unicorn' do
 	group 'root'
 end
 
-directory '/vagrant/config/unicorn' do
-	owner 'vagrant'
-	group 'vagrant'
-	action :create
-end
-
-template '/vagrant/config/unicorn/development.rb' do
+template '/etc/unicorn/rack.rb' do
 	source 'environment.rb'
-	owner 'vagrant'
-	group 'vagrant'
+	owner 'root'
+	group 'root'
 end
 
-template '/etc/nginx/conf.d/unicorn.conf' do
+template '/etc/nginx/sites-available/rack' do
 	source 'unicorn.conf'
-	owner 'www-data'
-	group 'www-data'
+	owner 'root'
+ 	group 'root'
 end
 
-%w(pids sockets).each do |dir|
-	directory "/vagrant/tmp/#{dir}" do
-		owner 'vagrant'
-		group 'vagrant'
-		action :create
-	end
+nginx_site 'rack' do
+	action :enable
+end
+
+nginx_site 'default' do
+	action :disable
 end
 
 service 'unicorn' do
-	action [:enable, :start]
+	action :start
 end
 
 service 'nginx' do
 	action :restart
+end
+
+execute 'open-port 80' do
+	action :run
 end

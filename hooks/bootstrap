@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+export HOME=/root
+
+apt-get update
+apt-get install -y curl build-essential
+
+curl -L https://get.rvm.io | bash -s stable --ruby
+
+export PATH=$PATH:/usr/local/rvm/bin
+source /usr/local/rvm/scripts/rvm
+
+cd "$(dirname $0)" && bundle install
+
+mkdir -p /etc/chef
+[[ -a /etc/chef/solo.rb ]] || touch /etc/chef/solo.rb
+
+mkdir -p /var/chef
+cp -r chef/* /var/chef
