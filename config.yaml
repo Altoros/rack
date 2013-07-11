@@ -1,24 +1,32 @@
 options:
-  app_name:
-    type: string
-    default: sample-rails
-    description: Application Name
   repo:
     type: string
     default: "https://github.com/pavelpachkovskij/sample-rails.git"
     description: Application repository URL
-  repo_branch:
+  branch:
     type: string
     default: master
-    description: Application branch name (git only, for bzr the branch is in the url)
-  repo_type:
+    description: Application branch name (git only).
+  revision:
+    type: string
+    default: HEAD
+    description: "The revision to be checked out. This can be symbolic, like HEAD or it can be a source control management-specific revision identifier. Default value: HEAD (svn only)."
+  scm_provider:
     type: string
     default: git
-    description: Repository type {git|bzr|svn} for now
-  install_root:
+    description: The name of the source control management provider to be used (git or svn).
+  deploy_key:
     type: string
-    default: /var/www
-    description: Install the application in app_name under this directory
+    default: ""
+    description: A deploy key is an SSH key that is stored on the server and grants access to a repository (git only).
+  svn_username:
+    type: string
+    default: ""
+    description: The password for the user that has access to the Subversion repository (svn only).
+  svn_password:
+    type: string
+    default: ""
+    description: The user name for a user that has access to the Subversion repository (svn only).
   extra_packages:
     type: string
     default: ""
@@ -27,15 +35,3 @@ options:
     type: int
     default: 80
     description: Port to run application
-  migrate_database:
-    type: boolean
-    default: true
-    description: Migrate database
-  seed_database:
-    type: boolean
-    default: true
-    description: Seed database
-  compile_assets:
-    type: boolean
-    default: true
-    description: Compile assets

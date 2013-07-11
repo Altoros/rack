@@ -1,10 +1,42 @@
-package 'git-core' do
-  action :install
+case config_get('scm_provider')
+when 'git'
+  package 'git-core' do
+    action :install
+  end
+when 'svn'
+  package 'subversion' do
+    action :install
+  end
+else
+  raise ArgumentError
 end
 
 user 'deploy' do
   action :create
   shell '/bin/bash'
+  supports manage_home: true
+end
+
+if config_get('deploy_key')
+  directory "/tmp/private_code/.ssh" do
+    owner 'deploy'
+    group 'deploy'
+    recursive true
+  end
+
+  cookbook_file "/tmp/private_code/wrap-ssh.sh" do
+    source "wrap-ssh.sh"
+    owner 'deploy'
+    group 'deploy'
+    mode 00700
+  end
+
+  file '/tmp/private_code/.ssh/id_deploy' do
+    content config_get('deploy_key')
+    owner 'deploy'
+    group 'deploy'
+    mode 00400
+  end
 end
 
 %w{config log pids cached-copy bundle system}.each do |dir|
