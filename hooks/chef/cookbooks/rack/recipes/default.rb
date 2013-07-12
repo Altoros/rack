@@ -49,3 +49,14 @@ end
   end
 end
 
+file '/var/www/rack/shared/config/database.yml' do
+  owner 'deploy'
+  group 'deploy'
+  action :create
+end
+
+%w(libpq++-dev libmysql++-dev).each do |pckg|
+  package pckg do
+    action :install
+  end
+end

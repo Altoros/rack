@@ -5,6 +5,6 @@ define :rake_task, action: :run, user: 'ubuntu', group: 'ubuntu', cwd: nil do
     group params[:group]
     cwd params[:cwd]
     action params[:action]
-    only_if { %x(unset BUNDLE_GEMFILE RUBYOPT GEM_HOME && cd #{params[:cwd]} && bundle exec rake #{params[:name]} --dry-run) }
+    only_if { run("unset BUNDLE_GEMFILE RUBYOPT GEM_HOME && cd #{params[:cwd]} && bundle exec rake #{params[:name]} --dry-run") && $?.success? }
   end
 end

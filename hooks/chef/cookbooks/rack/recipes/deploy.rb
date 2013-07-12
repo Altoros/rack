@@ -1,24 +1,33 @@
 deploy_revision '/var/www/rack' do
   repo config_get('repo')
   action :deploy
-  symlink_before_migrate({})
+
   user 'deploy'
   group 'deploy'
 
   case config_get('scm_provider')
-  when 'git'
-    branch config_get('branch')
-    ssh_wrapper "/tmp/private_code/wrap-ssh.sh"
-  when 'svn'
-    revision config_get('revision')
-    scm_provider Chef::Provider::Subversion
-    svn_username config_get('svn_username')
-    svn_password config_get('svn_password')
-  else
-    raise ArgumentError
+    when 'git'
+      branch config_get('branch')
+      ssh_wrapper "/tmp/private_code/wrap-ssh.sh"
+    when 'svn'
+      revision config_get('revision')
+      scm_provider Chef::Provider::Subversion
+      svn_username config_get('svn_username')
+      svn_password config_get('svn_password')
+    else
+      raise ArgumentError
   end
 
+  before_symlink
+
   before_migrate do
+    # workaround for symlink_before_migrate() http://tickets.opscode.com/browse/CHEF-4374
+    directory "#{release_path}/config" do
+      user 'deploy'
+      group 'deploy'
+      action :create
+    end
+
     execute 'bundle install' do
       cwd release_path
       user 'deploy'
