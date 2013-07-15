@@ -39,8 +39,8 @@ if config_get('deploy_key')
   end
 end
 
-%w{config log pids cached-copy bundle system}.each do |dir|
-  directory "/var/www/rack/shared/#{dir}" do
+%w{config log pids cached-copy bundle system db}.each do |dir|
+  directory "#{node[:rack][:root]}/shared/#{dir}" do
     owner 'deploy'
     group 'deploy'
     mode '0755'
@@ -49,13 +49,18 @@ end
   end
 end
 
-file '/var/www/rack/shared/config/database.yml' do
+template "#{node[:rack][:root]}/shared/config/database.yml" do
   owner 'deploy'
   group 'deploy'
-  action :create
+  action :create_if_missing
+  variables({
+    rack_env: config_get('rack_env'),
+    adapter: 'sqlite3',
+    database: "#{node[:rack][:root]}/shared/db/rack_#{config_get('rack_env')}.sqlite3"
+  })
 end
 
-%w(libpq++-dev libmysql++-dev).each do |pckg|
+%w(libpq++-dev libmysql++-dev libsqlite3-dev).each do |pckg|
   package pckg do
     action :install
   end

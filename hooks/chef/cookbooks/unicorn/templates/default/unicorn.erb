@@ -8,11 +8,11 @@ source "$rvm_path/scripts/rvm"
 
 # Feel free to change any of the following variables for your app:
 TIMEOUT=${TIMEOUT-60}
-RAILS_ENV=production
+RACK_ENV=<%= @rack_env %>
 APP_NAME=rack
 APP_ROOT=/var/www/$APP_NAME/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="cd $APP_ROOT && bundle exec unicorn -c /etc/unicorn/rack.rb -E $RAILS_ENV -D"
+CMD="cd $APP_ROOT && bundle exec unicorn -c /etc/unicorn/rack.rb -E $RACK_ENV -D"
 USER=deploy
 action="$1"
 set -u

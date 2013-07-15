@@ -3,4 +3,4 @@ set -e
 
 source "$(dirname $0)/bootstrap"
 
-chef-solo -j chef-solo/install.json
+chef-solo -j $(dirname $0)/chef-solo/install.json

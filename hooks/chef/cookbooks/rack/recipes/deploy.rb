@@ -1,4 +1,4 @@
-deploy_revision '/var/www/rack' do
+deploy_revision node[:rack][:root] do
   repo config_get('repo')
   action :deploy
 
@@ -18,8 +18,6 @@ deploy_revision '/var/www/rack' do
       raise ArgumentError
   end
 
-  before_symlink
-
   before_migrate do
     # workaround for symlink_before_migrate() http://tickets.opscode.com/browse/CHEF-4374
     directory "#{release_path}/config" do
@@ -33,18 +31,23 @@ deploy_revision '/var/www/rack' do
       action :add
     end
 
+    gemfile "#{release_path}/Gemfile" do
+      bundled_gem 'sqlite3'
+      action :add
+    end
+
     execute 'bundle install' do
       cwd release_path
       user 'deploy'
       group 'deploy'
-      command "unset BUNDLE_GEMFILE RUBYOPT GEM_HOME && bundle install --path /var/www/rack/shared/bundle"
+      command wrap_bundle("bundle install --path #{node[:rack][:root]}/shared/bundle")
       action :run
     end
   end
 
   before_restart do
     rake_task 'assets:precompile' do
-      cwd '/var/www/rack/current'
+      cwd "#{node[:rack][:root]}/current"
       user 'deploy'
       group 'deploy'
       action :run

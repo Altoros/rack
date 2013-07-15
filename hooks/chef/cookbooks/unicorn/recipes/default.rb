@@ -9,20 +9,23 @@ directory '/etc/unicorn/' do
 end
 
 template '/etc/init.d/unicorn' do
-	source 'unicorn'
+	source 'unicorn.erb'
 	mode '0755'
 	owner 'root'
 	group 'root'
+	variables({
+		rack_env: config_get('rack_env')
+	})
 end
 
 template '/etc/unicorn/rack.rb' do
-	source 'environment.rb'
+	source 'environment.rb.erb'
 	owner 'root'
 	group 'root'
 end
 
 template '/etc/nginx/sites-available/rack' do
-	source 'unicorn.conf'
+	source 'unicorn.conf.erb'
 	owner 'root'
  	group 'root'
 end

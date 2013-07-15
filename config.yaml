@@ -27,10 +27,18 @@ options:
     type: string
     default: ""
     description: The user name for a user that has access to the Subversion repository (svn only).
+  rack_env:
+    type: string
+    default: production
+    description: Both RACK_ENV and RAILS_ENV environment variables.
   extra_packages:
     type: string
     default: ""
     description: Extra packages to install before bundle install
+  command:
+    type: string
+    default: nil
+    description: A command to run in the application root.
   port:
     type: int
     default: 80

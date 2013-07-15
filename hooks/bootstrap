@@ -13,8 +13,11 @@ source /usr/local/rvm/scripts/rvm
 
 cd "$(dirname $0)" && bundle install
 
-mkdir -p /etc/chef
-[[ -a /etc/chef/solo.rb ]] || touch /etc/chef/solo.rb
+configure_chef_solo() {
+  cat > /etc/chef/solo.rb <<EOF
+  cookbook_path '$(dirname $0)/chef/cookbooks'
+EOF
+}
 
-mkdir -p /var/chef
-cp -r chef/* /var/chef
+mkdir -p /etc/chef
+[[ -a /etc/chef/solo.rb ]] || configure_chef_solo()
