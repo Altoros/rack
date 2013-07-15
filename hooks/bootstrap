@@ -2,6 +2,7 @@
 set -e
 
 export HOME=/root
+export HOOKS_DIR=$( cd "$( dirname "$0" )" && pwd)
 
 apt-get update
 apt-get install -y curl build-essential
@@ -15,9 +16,9 @@ cd "$(dirname $0)" && bundle install
 
 configure_chef_solo() {
   cat > /etc/chef/solo.rb <<EOF
-  cookbook_path '$(dirname $0)/chef/cookbooks'
+  cookbook_path '$HOOKS_DIR/chef/cookbooks'
 EOF
 }
 
 mkdir -p /etc/chef
-[[ -a /etc/chef/solo.rb ]] || configure_chef_solo()
+[[ -a /etc/chef/solo.rb ]] || configure_chef_solo

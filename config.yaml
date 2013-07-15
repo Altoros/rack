@@ -37,7 +37,7 @@ options:
     description: Extra packages to install before bundle install
   command:
     type: string
-    default: nil
+    default:
     description: A command to run in the application root.
   port:
     type: int
