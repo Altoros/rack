@@ -28,11 +28,16 @@ deploy_revision '/var/www/rack' do
       action :create
     end
 
+    gemfile "#{release_path}/Gemfile" do
+      bundled_gem 'unicorn'
+      action :add
+    end
+
     execute 'bundle install' do
       cwd release_path
       user 'deploy'
       group 'deploy'
-      command "unset BUNDLE_GEMFILE RUBYOPT GEM_HOME && bundle install --deployment --path /var/www/rack/shared/bundle"
+      command "unset BUNDLE_GEMFILE RUBYOPT GEM_HOME && bundle install --path /var/www/rack/shared/bundle"
       action :run
     end
   end

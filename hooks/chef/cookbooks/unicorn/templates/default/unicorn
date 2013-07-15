@@ -12,7 +12,7 @@ RAILS_ENV=production
 APP_NAME=rack
 APP_ROOT=/var/www/$APP_NAME/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="cd $APP_ROOT && unicorn -c /etc/unicorn/rack.rb -E $RAILS_ENV -D"
+CMD="cd $APP_ROOT && bundle exec unicorn -c /etc/unicorn/rack.rb -E $RAILS_ENV -D"
 USER=deploy
 action="$1"
 set -u
