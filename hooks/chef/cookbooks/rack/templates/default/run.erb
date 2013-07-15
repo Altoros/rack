@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+COMMAND="$@"
+sudo su - deploy -c "export RACK_ENV=<%= @rack_env %> RAILS_ENV=<%= @rack_env %>/current && cd <%= node[:rack][:root] %> && bundle exec $COMMAND"

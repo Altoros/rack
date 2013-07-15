@@ -12,9 +12,10 @@ else
 end
 
 user 'deploy' do
-  action :create
+  home '/home/deploy'
   shell '/bin/bash'
   supports manage_home: true
+  action :create
 end
 
 if config_get('deploy_key')
@@ -64,4 +65,15 @@ end
   package pckg do
     action :install
   end
+end
+
+template "/usr/bin/run" do
+  source 'run.erb'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  variables({
+    rack_env: config_get('rack_env')
+  })
+  action :create
 end
