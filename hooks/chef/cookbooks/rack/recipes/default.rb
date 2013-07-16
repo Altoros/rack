@@ -1,3 +1,6 @@
+node.default[:rack][:repo] = config_get('repo')
+node.save
+
 case config_get('scm_provider')
 when 'git'
   package 'git-core' do
@@ -40,7 +43,7 @@ if config_get('deploy_key')
   end
 end
 
-%w{config log pids cached-copy bundle system db}.each do |dir|
+%w{bin config log pids cached-copy bundle system db}.each do |dir|
   directory "#{node[:rack][:root]}/shared/#{dir}" do
     owner 'deploy'
     group 'deploy'
@@ -67,13 +70,4 @@ end
   end
 end
 
-template "/usr/bin/run" do
-  source 'run.erb'
-  owner 'root'
-  group 'root'
-  mode '0755'
-  variables({
-    rack_env: config_get('rack_env')
-  })
-  action :create
-end
+include_recipe 'rack::configure_scripts'
