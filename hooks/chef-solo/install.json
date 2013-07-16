@@ -1,3 +1,4 @@
 {
-  "run_list": ["recipe[nginx::default]", "recipe[nodejs::default]", "recipe[rack::default]", "recipe[rack::deploy]", "recipe[unicorn::default]"]
+  "run_list": ["recipe[juju::read_config]", "recipe[nginx::default]", "recipe[nodejs::default]",
+    "recipe[rack::default]", "recipe[rack::deploy]", "recipe[unicorn::default]", "recipe[juju::dump_config]"]
 }

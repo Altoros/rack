@@ -14,7 +14,7 @@ template '/etc/init.d/unicorn' do
 	owner 'root'
 	group 'root'
 	variables({
-		rack_env: config_get('rack_env')
+		rack_env: node[:juju][:rack_env]
 	})
 end
 

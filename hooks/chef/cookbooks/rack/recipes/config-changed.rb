@@ -1,14 +1,7 @@
-command = config_get('command')
+if node.default[:juju][:revision] != node.override[:juju][:revision]
+  include_recipe 'rack::deploy'
 
-unless command.nil? || command.empty?
-  if command == 'update'
-    include_recipe 'rack::update'
-  else
-    execute wrap_bundle("bundle exec #{command}") do
-      cwd "#{node[:rack][:root]}/current"
-      user 'deploy'
-      group 'deploy'
-      action :run
-    end
+  service 'unicorn' do
+    action :restart
   end
 end
