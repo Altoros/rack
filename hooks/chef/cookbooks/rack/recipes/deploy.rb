@@ -1,5 +1,5 @@
 if node[:juju][:extra_packages]
-  node[:juju][:extra_packages].each do |pckg|
+  node[:juju][:extra_packages].split(',').map(&:strip).each do |pckg|
     package pckg do
       action :install
     end

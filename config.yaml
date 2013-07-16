@@ -33,7 +33,7 @@ options:
     description: Both RACK_ENV and RAILS_ENV environment variables.
   extra_packages:
     type: string
-    default: ""
+    default:
     description: Extra packages to install before bundle install
   port:
     type: int
