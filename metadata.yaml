@@ -7,24 +7,7 @@ description: |
   By wrapping HTTP requests and responses in the simplest way possible,
   it unifies and distills the API for web servers, web frameworks, and
   software in between (the so-called middleware) into a single method call.
-provides:
-  god:
-    interface: god
-    scope: container
-    optional: true
 requires:
-  rack-server:
-    interface: rack
-    scope:  container
-  mysql:
-    interface: mysql
-    optional: true
   postgresql:
     interface: pgsql
-    optional: true
-  resque:
-    interface: redis
-    optional: true
-  mongoid:
-    interface: mongodb
     optional: true

@@ -1,13 +1,21 @@
 require 'yaml'
 
 module JujuHelpers
-  def config_get(name)
-    value = %x(config-get #{name}).strip
-    value.empty? ? nil : value
+  def config_get(key)
+    run("config-get #{key}")
   end
 
   def open_port(port)
-    %x(open-port #{port})
+    run("open-port #{port}")
+  end
+
+  def relation_get(key)
+    run("relation-get #{key}")
+  end
+
+  def relation_set(params = {})
+    params_string = params.map { |key, value| "#{key}=#{value}" }.join(' ')
+    run("relation-set #{params_string}")
   end
 
   def juju_config
@@ -39,6 +47,20 @@ module JujuHelpers
   def read_stored_juju_config
     if File.exists?("#{node[:rack][:root]}/shared/config/juju.yml")
       YAML.load(File.read("#{node[:rack][:root]}/shared/config/juju.yml"))
+    else
+      {}
+    end
+  end
+
+  def immutable_mash_to_hash(mash)
+    {}.tap do |hash|
+      mash.each do |key, value|
+        if value.respond_to?(:to_hash)
+          hash[key] = immutable_mash_to_hash(value.to_hash)
+        else
+          hash[key] = value
+        end
+      end
     end
   end
 end

@@ -39,6 +39,7 @@ nginx_site 'default' do
 end
 
 service 'unicorn' do
+	ignore_failure true
 	action :start
 end
 

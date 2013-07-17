@@ -89,14 +89,11 @@ deploy_revision node[:rack][:root] do
       action :create
     end
 
-    gemfile "#{release_path}/Gemfile" do
-      bundled_gem 'unicorn'
-      action :add
-    end
-
-    gemfile "#{release_path}/Gemfile" do
-      bundled_gem 'sqlite3'
-      action :add
+    node[:rack][:extra_gems].each do |extra_gem|
+      gemfile "#{release_path}/Gemfile" do
+        bundled_gem extra_gem
+        action :add
+      end
     end
 
     execute 'bundle install' do

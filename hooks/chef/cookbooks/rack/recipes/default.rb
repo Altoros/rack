@@ -21,13 +21,13 @@ end
   end
 end
 
-template "#{node[:rack][:root]}/shared/config/database.yml" do
-  owner 'deploy'
-  group 'deploy'
-  action :create_if_missing
-  variables({
-    rack_env: node[:juju][:rack_env],
-    adapter: 'sqlite3',
-    database: "#{node[:rack][:root]}/shared/db/rack_#{node[:juju][:rack_env]}.sqlite3"
-  })
-end
+# template "#{node[:rack][:root]}/shared/config/database.yml" do
+#   owner 'deploy'
+#   group 'deploy'
+#   action :create_if_missing
+#   variables({
+#     rack_env: node[:juju][:rack_env],
+#     adapter: 'sqlite3',
+#     database: "#{node[:rack][:root]}/shared/db/rack_#{node[:juju][:rack_env]}.sqlite3"
+#   })
+# end

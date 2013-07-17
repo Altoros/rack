@@ -1,0 +1,3 @@
+{
+  "run_list": ["recipe[juju::read_config]", "recipe[rack::postgresql-relation-joined]", "recipe[juju::dump_config]"]
+}

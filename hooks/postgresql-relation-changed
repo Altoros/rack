@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+export PATH=$PATH:/usr/local/rvm/bin
+source /usr/local/rvm/scripts/rvm
+
+chef-solo -j $(dirname $0)/chef-solo/postgresql-relation-changed.json
