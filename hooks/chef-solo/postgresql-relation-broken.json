@@ -1,3 +1,3 @@
 {
-  "run_list": ["recipe[juju::read_config]", "recipe[rack::postgresql-relation-broken]", "recipe[juju::dump_config]"]
+  "run_list": ["recipe[juju::load_config]", "recipe[postgresql-relation::broken]", "recipe[juju::dump_config]"]
 }

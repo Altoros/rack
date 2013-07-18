@@ -1,3 +1,10 @@
+include_recipe 'nginx::default'
+include_recipe 'nodejs::default'
+
+execute 'rvm rvmrc warning ignore all.rvmrcs' do
+  action :run
+end
+
 %w(libpq++-dev libmysql++-dev libsqlite3-dev).each do |pckg|
   package pckg do
     action :install
@@ -20,3 +27,6 @@ end
     action :create
   end
 end
+
+include_recipe 'rack::deploy'
+include_recipe 'unicorn::default'

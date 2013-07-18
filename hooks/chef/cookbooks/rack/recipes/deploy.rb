@@ -89,10 +89,17 @@ deploy_revision node[:rack][:root] do
       action :create
     end
 
-    node[:rack][:extra_gems].each do |extra_gem|
-      gemfile "#{release_path}/Gemfile" do
-        bundled_gem extra_gem
-        action :add
+    gemfile "#{release_path}/Gemfile" do
+      bundled_gem 'unicorn'
+      action :add
+    end
+
+    if node[:juju][:extra_gems]
+      node[:juju][:extra_gems].each do |extra_gem|
+        gemfile "#{release_path}/Gemfile" do
+          bundled_gem extra_gem
+          action :add
+        end
       end
     end
 

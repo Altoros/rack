@@ -11,3 +11,6 @@ requires:
   postgresql:
     interface: pgsql
     optional: true
+  mysql:
+    interface: mysql
+    optional: true

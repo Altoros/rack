@@ -1,0 +1,3 @@
+{
+  "run_list": ["recipe[juju::load_config]", "recipe[mysql-relation::changed]", "recipe[juju::dump_config]"]
+}

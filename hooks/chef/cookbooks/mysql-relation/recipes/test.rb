@@ -1,0 +1,1 @@
+raise node[:rack][:root]

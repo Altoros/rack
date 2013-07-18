@@ -16,7 +16,8 @@ cd "$(dirname $0)" && bundle install
 
 configure_chef_solo() {
   cat > /etc/chef/solo.rb <<EOF
-  cookbook_path '$HOOKS_DIR/chef/cookbooks'
+cookbook_path '$HOOKS_DIR/chef/cookbooks'
+data_bag_path '$HOOKS_DIR/chef/data_bags'
 EOF
 }
 

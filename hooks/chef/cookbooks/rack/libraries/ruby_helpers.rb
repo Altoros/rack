@@ -1,11 +1,7 @@
 module RubyHelpers
   def run(command)
-    value = execute(command).strip
+    value = %x{ #{command} 2>&1 }.strip
     value.empty? ? nil : value
-  end
-
-  def execute(command)
-    %x{ #{command} 2>&1 }
   end
 
   def wrap_bundle(command)

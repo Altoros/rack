@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    chef (11.6.0.rc.3)
+    chef (11.6.0.rc.4)
       erubis
       highline (>= 1.6.9)
       json (>= 1.4.4, <= 1.7.7)
@@ -49,4 +49,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  chef (~> 11.6.0.rc.3)
+  chef (~> 11.6.0.rc.4)

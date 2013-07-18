@@ -55,8 +55,10 @@ module JujuHelpers
   def immutable_mash_to_hash(mash)
     {}.tap do |hash|
       mash.each do |key, value|
-        if value.respond_to?(:to_hash)
+        if value.kind_of?(Chef::Node::ImmutableMash)
           hash[key] = immutable_mash_to_hash(value.to_hash)
+        elsif value.kind_of?(Chef::Node::ImmutableArray)
+          hash[key] = value.dup
         else
           hash[key] = value
         end
