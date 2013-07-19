@@ -26,6 +26,7 @@ else
   end
 
   service 'unicorn' do
+    restart_command 'service unicorn upgrade'
     ignore_failure true
     action :restart
   end

@@ -5,3 +5,7 @@ description      "Installs/Configures rack"
 
 version          "0.1"
 name             "rack"
+depends          "nginx"
+depends          "juju"
+depends          "unicorn"
+depends          "nodejs"

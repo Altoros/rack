@@ -67,6 +67,9 @@ deploy_revision node[:rack][:root] do
   user 'deploy'
   group 'deploy'
 
+  symlink_before_migrate({'config/database.yml' => 'config/database.yml',
+                          'config/mongoid.yml' => 'config/mongoid.yml'})
+
   case node[:juju][:scm_provider]
     when 'git'
       branch node[:juju][:branch]
@@ -103,12 +106,8 @@ deploy_revision node[:rack][:root] do
       end
     end
 
-    execute 'bundle install' do
-      cwd release_path
-      user 'deploy'
-      group 'deploy'
-      command wrap_bundle("bundle install --path #{node[:rack][:root]}/shared/bundle")
-      action :run
+    bundle release_path do
+      action :install
     end
   end
 

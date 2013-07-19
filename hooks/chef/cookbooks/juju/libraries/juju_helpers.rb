@@ -18,6 +18,10 @@ module JujuHelpers
     run("relation-set #{params_string}")
   end
 
+  def unit_get(key)
+    run("unit-get #{key}")
+  end
+
   def juju_config
     if ENV['JUJU_ENV'] == 'development'
       {

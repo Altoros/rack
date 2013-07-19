@@ -4,6 +4,6 @@ license          "Apache 2.0"
 description      "MongoDB relation"
 
 version          "0.1"
-name             "juju"
+name             "mongodb-relation"
 depends          "rack"
 depends          "juju"
