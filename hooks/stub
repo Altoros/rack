@@ -5,4 +5,4 @@ export HOME=/root
 export PATH=$PATH:/usr/local/rvm/bin
 source /usr/local/rvm/scripts/rvm
 
-chef-solo -j $(dirname $0)/chef-solo/$(basename $0).json
+juju_chef-solo -j $(dirname $0)/chef-solo/$(basename $0).json

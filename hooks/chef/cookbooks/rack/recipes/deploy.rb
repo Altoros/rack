@@ -92,6 +92,12 @@ deploy_revision node[:rack][:root] do
       action :create
     end
 
+    %w(.rvmrc ruby-version .ruby-version .rbenv-version).each do |rvm_file|
+      file "#{release_path}/#{rvm_file}" do
+        action :delete
+      end
+    end
+
     bundle release_path do
       action :install
     end

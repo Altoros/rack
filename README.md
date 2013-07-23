@@ -83,6 +83,15 @@ Example Procfile:
     web: bundle exec unicorn -p $PORT
     watcher: bundle exec rake watch
 
+## Specifying a Ruby Version
+
+You can use the ruby keyword of your app’s Gemfile to specify a particular version of Ruby.
+
+```ruby
+source "https://rubygems.org"
+ruby "1.9.3"
+````
+
 ## Configuration
 
 List of available options:

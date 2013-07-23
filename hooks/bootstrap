@@ -14,6 +14,8 @@ source /usr/local/rvm/scripts/rvm
 
 cd "$(dirname $0)" && bundle install
 
+rvm wrapper ruby juju chef-solo bundle
+
 configure_chef_solo() {
   cat > /etc/chef/solo.rb <<EOF
 cookbook_path '$HOOKS_DIR/chef/cookbooks'
