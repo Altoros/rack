@@ -62,6 +62,18 @@ If you use Mongodb with Mongoid then on a step 3 you should run
 
         juju expose html2haml
 
+## Source code updates
+
+```shell
+juju set <service_name> revision=<revision>
+```
+
+## Executing commands
+
+```shell
+juju ssh <machine_id> run rake db:migrate
+```
+
 ## Foreman integration
 
 You can add Procfile to your application and Rack charm will use it for deployment.
