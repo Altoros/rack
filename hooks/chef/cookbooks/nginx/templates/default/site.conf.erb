@@ -1,5 +1,5 @@
-upstream unicorn {
-  server unix://tmp/unicorn.sock;
+upstream rack {
+  server localhost:8080;
 }
 
 server {
@@ -32,7 +32,7 @@ server {
     }
 
     if (!-f $request_filename) {
-      proxy_pass http://unicorn;
+      proxy_pass http://rack;
       break;
     }
   }

@@ -1,13 +1,3 @@
-execute 'rvm rvmrc warning ignore all.rvmrcs' do
-  action :run
-end
-
-# %w(libpq++-dev libmysql++-dev libsqlite3-dev).each do |pckg|
-#   package pckg do
-#     action :install
-#   end
-# end
-
 user 'deploy' do
   home '/home/deploy'
   shell '/bin/bash'

@@ -92,20 +92,6 @@ deploy_revision node[:rack][:root] do
       action :create
     end
 
-    gemfile "#{release_path}/Gemfile" do
-      bundled_gem 'unicorn'
-      action :add
-    end
-
-    if node[:juju][:extra_gems]
-      node[:juju][:extra_gems].each do |extra_gem|
-        gemfile "#{release_path}/Gemfile" do
-          bundled_gem extra_gem
-          action :add
-        end
-      end
-    end
-
     bundle release_path do
       action :install
     end
@@ -119,4 +105,32 @@ deploy_revision node[:rack][:root] do
       action :run
     end
   end
+end
+
+rack_procfile 'reverse_merge entries in Procfile' do
+  procfile "#{node[:rack][:root]}/current/Procfile"
+  entries({web: 'bundle exec rackup config.ru -p $PORT'})
+  user 'deploy'
+  group 'deploy'
+  mode '0644'
+  action :reverse_merge
+end
+
+template "#{node[:rack][:root]}/current/.env" do
+  source '.env.erb'
+  user 'deploy'
+  group 'deploy'
+  mode '0644'
+  action :create
+  variables({
+    rack_env: node[:juju][:rack_env],
+    port: 8080
+  })
+end
+
+rack_procfile 'rack Procfile' do
+  cwd "#{node[:rack][:root]}/current"
+  user 'deploy'
+  app 'rack'
+  action :export
 end

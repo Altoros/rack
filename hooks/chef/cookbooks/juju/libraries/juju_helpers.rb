@@ -25,11 +25,11 @@ module JujuHelpers
   def juju_config
     if ENV['JUJU_ENV'] == 'development'
       {
-        repo: 'https://github.com/pavelpachkovskij/sample-rails/trunk',
-        scm_provider: 'svn',
+        repo: 'https://github.com/pavelpachkovskij/octopress',
+        scm_provider: 'git',
+        branch: 'public',
+        revision: 'public',
         rack_env: 'development',
-        revision: '15',
-        branch: 'trunk'
       }
     else
       {
