@@ -15,7 +15,7 @@ Rack [Juju Charm](http://jujucharms.com/).
 
 2. Deploy Rack application (see configuration section below)
 
-        juju deploy rack --config sample-rails.yml
+        juju deploy rack sample-rails --config sample-rails.yml
 
 3. Deploy and relate database
 
