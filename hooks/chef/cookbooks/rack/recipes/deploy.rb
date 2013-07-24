@@ -7,16 +7,16 @@ if node[:juju][:extra_packages]
 end
 
 case node[:juju][:scm_provider]
-when 'git'
-  package 'git-core' do
-    action :install
-  end
-when 'svn'
-  package 'subversion' do
-    action :install
-  end
-else
-  raise ArgumentError
+  when 'git'
+    package 'git-core' do
+      action :install
+    end
+  when 'svn'
+    package 'subversion' do
+      action :install
+    end
+  else
+    raise ArgumentError
 end
 
 if node[:juju][:deploy_key]
@@ -73,7 +73,6 @@ deploy_revision node[:rack][:root] do
   case node[:juju][:scm_provider]
     when 'git'
       branch node[:juju][:branch]
-      revision node[:juju][:revision]
       ssh_wrapper "/tmp/private_code/wrap-ssh.sh"
     when 'svn'
       revision node[:juju][:revision]
@@ -92,13 +91,9 @@ deploy_revision node[:rack][:root] do
       action :create
     end
 
-    %w(.rvmrc ruby-version .ruby-version .rbenv-version).each do |rvm_file|
-      file "#{release_path}/#{rvm_file}" do
-        action :delete
-      end
-    end
-
     bundle release_path do
+      user 'deploy'
+      group 'deploy'
       action :install
     end
   end
@@ -108,6 +103,7 @@ deploy_revision node[:rack][:root] do
       cwd "#{node[:rack][:root]}/current"
       user 'deploy'
       group 'deploy'
+      ignore_failure true
       action :run
     end
   end

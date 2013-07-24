@@ -1,4 +1,10 @@
 define :bundle, action: :install do
+  %w(.rvmrc ruby-version .ruby-version .rbenv-version).each do |rvm_file|
+    file "#{params[:name]}/#{rvm_file}" do
+      action :delete
+    end
+  end
+
   node[:rack][:gems_dependencies].each do |bundled_gem, packages|
     if %x(grep -q #{bundled_gem} #{params[:name]}/Gemfile) && $?.success?
       packages.each do |pckg|
@@ -21,7 +27,6 @@ define :bundle, action: :install do
     end
   end
 
-
   execute "rvm wrapper #{ruby_version_string} rack bundle" do
     action :run
   end
@@ -29,15 +34,17 @@ define :bundle, action: :install do
   file "#{params[:name]}/.ruby-version" do
     action :create
     content ruby_version_string
-    group 'deploy'
-    user 'deploy'
+    group params[:group]
+    user params[:user]
   end
+
+  bundle_without = (%w(development production test) - [node[:rack][:rack_env]]).join(' ')
 
   execute 'bundle install' do
     action :run
-    command wrap_bundle("rack_bundle install --path #{node[:rack][:root]}/shared/bundle")
+    command wrap_bundle("rack_bundle install --without #{bundle_without} --path #{node[:rack][:root]}/shared/bundle")
     cwd params[:name]
-    group 'deploy'
-    user 'deploy'
+    group params[:group]
+    user params[:user]
   end
 end

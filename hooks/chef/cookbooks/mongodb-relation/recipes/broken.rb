@@ -1,5 +1,3 @@
-node.override[:juju][:mongodb] = nil
-
 file "#{node[:rack][:root]}/shared/config/mongoid.yml" do
   action :delete
 end

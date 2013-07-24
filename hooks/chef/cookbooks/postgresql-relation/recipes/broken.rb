@@ -1,5 +1,3 @@
-node.override[:juju][:postgresql] = nil
-
 file "#{node[:rack][:root]}/shared/config/database.yml" do
   action :delete
 end

@@ -31,5 +31,3 @@ else
     action :restart
   end
 end
-
-node.override[:juju][:postgresql] = postgresql

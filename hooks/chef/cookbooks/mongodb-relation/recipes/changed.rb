@@ -27,5 +27,3 @@ else
     action :restart
   end
 end
-
-node.override[:juju][:mongodb] = mongodb
