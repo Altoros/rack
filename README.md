@@ -62,6 +62,16 @@ If you use Mongodb with Mongoid then on a step 3 you should run
 
         juju expose html2haml
 
+## Scaling example
+
+```shell
+juju deploy rack html2haml --config html2haml.yml
+juju deploy haproxy
+juju add-unit html2haml -n 2
+juju add-relation haproxy html2haml
+juju expose haproxy
+```
+
 ## Source code updates
 
 ```shell
