@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -eu
-
-source "$(dirname $0)/common.sh"
-
-configure_database 'mysql2' "" "" "" ""
-
-requires_restart

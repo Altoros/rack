@@ -23,29 +23,19 @@ module JujuHelpers
   end
 
   def juju_config
-    if ENV['JUJU_ENV'] == 'development'
-      {
-        repo: 'https://github.com/pavelpachkovskij/octopress',
-        scm_provider: 'git',
-        branch: 'public',
-        revision: 'public',
-        rack_env: 'development',
-      }
-    else
-      {
-        repo: config_get('repo'),
-        branch: config_get('branch'),
-        revision: config_get('revision'),
-        scm_provider: config_get('scm_provider'),
-        deploy_key: config_get('deploy_key'),
-        svn_username: config_get('svn_username'),
-        svn_password: config_get('svn_password'),
-        rack_env: config_get('rack_env'),
-        extra_packages: config_get('extra_packages'),
-        command: config_get('command'),
-        port: config_get('port'),
-      }
-    end
+    {
+      repo: config_get('repo'),
+      branch: config_get('branch'),
+      revision: config_get('revision'),
+      scm_provider: config_get('scm_provider'),
+      deploy_key: config_get('deploy_key'),
+      svn_username: config_get('svn_username'),
+      svn_password: config_get('svn_password'),
+      rack_env: config_get('rack_env'),
+      extra_packages: config_get('extra_packages'),
+      command: config_get('command'),
+      port: config_get('port'),
+    }
   end
 
   def read_stored_juju_config

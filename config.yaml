@@ -1,7 +1,7 @@
 options:
   repo:
     type: string
-    default: "https://github.com/pavelpachkovskij/sample-rails.git"
+    default:
     description: Application repository URL
   branch:
     type: string
