@@ -6,7 +6,7 @@ Rack [Juju Charm](http://jujucharms.com/).
 
 ### Rails 3 example
 
-1. Configure your application, for example html2haml
+1. Configure your application, for example:
 
     **sample-rails.yml**
 
@@ -20,17 +20,21 @@ Rack [Juju Charm](http://jujucharms.com/).
 3. Deploy and relate database
 
         juju deploy postgresql
-        juju add-relation postgresql rack
+        juju add-relation postgresql sample-rails
 
 4. Run migrations if you need it. (replace '1' with your sample-rails machine id).
 
         juju ssh 1 run rake db:migrate
 
+    And for example seeds
+
+        juju ssh 1 run rake db:seed
+
 5. Open the stack up to the outside world.
 
         juju expose rack
 
-5. Find the Rack instance's public URL from
+6. Find the Rack instance's public URL from
 
         juju status
 
