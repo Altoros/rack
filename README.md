@@ -22,7 +22,11 @@ Rack [Juju Charm](http://jujucharms.com/).
         juju deploy postgresql
         juju add-relation postgresql rack
 
-4. Open the stack up to the outside world.
+4. Run migrations if you need it. (replace '1' with your sample-rails machine id).
+
+        juju ssh 1 run rake db:migrate
+
+5. Open the stack up to the outside world.
 
         juju expose rack
 
