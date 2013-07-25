@@ -10,6 +10,11 @@ description: |
 provides:
   website:
     interface: http
+  monitors:
+    interface: monitors
+  local-monitors:
+    interface: local-monitors
+    scope: container
 requires:
   postgresql:
     interface: pgsql
