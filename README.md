@@ -22,13 +22,13 @@ Rack [Juju Charm](http://jujucharms.com/).
         juju deploy postgresql
         juju add-relation postgresql:db sample-rails
 
-4. Run migrations if you need it. (replace '1' with your sample-rails machine id).
+4. Run migrations if you need it. (replace 'sample-rails/0' with your service name and unit id).
 
-        juju ssh 1 run rake db:migrate
+        juju ssh sample-rails/0 run rake db:migrate
 
     And for example seeds
 
-        juju ssh 1 run rake db:seed
+        juju ssh sample-rails/0 run rake db:seed
 
 5. Open the stack up to the outside world.
 
