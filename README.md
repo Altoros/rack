@@ -20,7 +20,7 @@ Rack [Juju Charm](http://jujucharms.com/).
 3. Deploy and relate database
 
         juju deploy postgresql
-        juju add-relation postgresql sample-rails
+        juju add-relation postgresql:db sample-rails
 
 4. Run migrations if you need it. (replace '1' with your sample-rails machine id).
 
@@ -43,7 +43,7 @@ Rack [Juju Charm](http://jujucharms.com/).
 On a step 3 run
 
     juju deploy mysql
-    juju add-relation mysql:db rack
+    juju add-relation mysql rack
 
 #### Mongodb setup
 
