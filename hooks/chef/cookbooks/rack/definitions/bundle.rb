@@ -6,7 +6,7 @@ define :bundle, action: :install do
   end
 
   node[:rack][:gems_dependencies].each do |bundled_gem, packages|
-    if %x(grep -q #{bundled_gem} #{params[:name]}/Gemfile) && $?.success?
+    if %x(grep -q #{bundled_gem} #{params[:name]}/Gemfile.lock) && $?.success?
       packages.each do |pckg|
         package pckg do
           action :install
