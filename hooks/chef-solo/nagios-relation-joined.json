@@ -1,0 +1,3 @@
+{
+  "run_list": ["recipe[juju::load_config]", "recipe[nagios-relation::changed]", "recipe[juju::dump_config]"]
+}

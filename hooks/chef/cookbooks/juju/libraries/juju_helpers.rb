@@ -14,7 +14,7 @@ module JujuHelpers
   end
 
   def relation_set(params = {})
-    params_string = params.map { |key, value| "#{key}=#{value}" }.join(' ')
+    params_string = params.map { |key, value| "#{key}=\"#{value}\"" }.join(' ')
     run("relation-set #{params_string}")
   end
 

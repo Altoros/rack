@@ -10,9 +10,9 @@ description: |
 provides:
   website:
     interface: http
-  monitors:
+  nagios:
     interface: monitors
-  local-monitors:
+  nrpe:
     interface: local-monitors
     scope: container
 requires:
