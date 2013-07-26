@@ -7,11 +7,3 @@ template '/etc/nginx/sites-available/rack' do
   owner 'root'
   group 'root'
 end
-
-nginx_site 'rack' do
-  action :enable
-end
-
-nginx_site 'default' do
-  action :disable
-end

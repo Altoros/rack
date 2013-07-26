@@ -20,10 +20,12 @@ end
 
 include_recipe 'rack::deploy'
 
-service 'rack' do
-  ignore_failure true
-  provider Chef::Provider::Service::Upstart
-  action :start
+nginx_site 'rack' do
+  action :enable
+end
+
+nginx_site 'default' do
+  action :disable
 end
 
 service 'nginx' do

@@ -3,4 +3,4 @@ set -e
 
 source "$(dirname $0)/bootstrap"
 
-juju_chef-solo -j $(dirname $0)/chef-solo/install.json
+juju_chef-solo -o "recipe[juju::load_config],recipe[rack::install],recipe[juju::dump_config]"
