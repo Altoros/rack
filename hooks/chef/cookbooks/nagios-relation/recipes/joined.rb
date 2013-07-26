@@ -2,7 +2,9 @@ private_address = unit_get('private-address')
 
 relation_set(
   "monitors" => {
+    "version" => "0.3",
     'monitors' => {
+      'local' => {},
       'remote' => {
         'http' => {
           'rack' => {
@@ -13,6 +15,6 @@ relation_set(
       }
     }
   }.to_yaml,
-  "target-id" => ENV["JUJU_UNIT_NAME"].gsub('/', '_'),
+  "target-id" => ENV["JUJU_UNIT_NAME"].gsub('/', '-'),
   "target-address" => private_address
 )
