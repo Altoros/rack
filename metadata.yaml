@@ -8,7 +8,7 @@ description: |
   it unifies and distills the API for web servers, web frameworks, and
   software in between (the so-called middleware) into a single method call.
 categories:
-    - app-servers
+  - app-servers
 provides:
   website:
     interface: http
