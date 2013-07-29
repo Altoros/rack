@@ -70,16 +70,6 @@ If you use Mongodb with Mongoid then on a step 3 you should run
 
         juju expose html2haml
 
-## Scaling example
-
-```shell
-juju deploy rack rack --config rack.yml
-juju deploy haproxy
-juju add-unit rack -n 2
-juju add-relation haproxy rack
-juju expose haproxy
-```
-
 ## Source code updates
 
 ```shell
@@ -109,6 +99,73 @@ You can use the ruby keyword of your app’s Gemfile to specify a particular ver
 source "https://rubygems.org"
 ruby "1.9.3"
 ````
+
+## Horizontal scaling of Rack application
+
+Juju makes it easy to scale your Rack application. You can simply deploy any supported load balancer, add relation and launch any number of application instances. Here is HAProxy example:
+
+```shell
+juju deploy rack rack --config rack.yml
+juju add-relation haproxy rack
+juju expose haproxy
+juju add-unit rack -n 2
+```
+
+### Apache2 as a load balancer
+
+Apache2 is harder to start with, but it provides more flexibility with configuration options.
+Here is a quick example of using Apache2 as a load balancer with your rack application:
+
+Deploy Rack application
+
+```shell
+juju deploy rack --config rack.yml
+```
+
+You have to enable mod_proxy_balancer and mod_proxy_http modules in your Apache2 config:
+
+**apache2.yml** example
+
+```yaml
+apache2:
+  enable_modules: proxy_balancer proxy_http
+```
+
+Deploy Apache2
+
+```shell
+juju deploy apache2 --config apache2.yml
+```
+
+Create balancer relation between Apache2 and Rack application
+
+```shell
+juju add-relation apache2:balancer rack
+```
+
+Apache2 charm expects a template to be passed in. Example of vhost that will balance all traffic over your application instances:
+
+**vhost.tmpl**
+
+```xml
+<VirtualHost *:80>
+    ServerName rack
+    ProxyPass / balancer://rack/ lbmethod=byrequests stickysession=BALANCEID
+    ProxyPassReverse / balancer://rack/
+</VirtualHost>
+```
+
+Update Apache2 service config with this template
+
+```shell
+juju set apache2 "vhost_http_template=$(base64 < vhost.tmpl)"
+```
+
+Expose Apache2 service
+
+```shell
+juju expose apache2
+```
 
 ## Nagios and NRPE relation
 
