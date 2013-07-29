@@ -110,6 +110,23 @@ source "https://rubygems.org"
 ruby "1.9.3"
 ````
 
+## Nagios and NRPE relation
+
+You can can perform HTTP checks with Nagios. To do this deploy Nagios and relate it to your Rack application:
+
+```shell
+juju deploy nagios
+juju add-relation rack nagios
+```
+
+Additionally you can run disk, mem, and swap checks with NRPE extension:
+
+```shell
+juju deploy nrpe
+juju add-relation rack nrpe
+juju add-relation nrpe nagios
+```
+
 ## Configuration
 
 List of available options:

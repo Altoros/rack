@@ -7,7 +7,7 @@ relation_set(
       'local' => {},
       'remote' => {
         'http' => {
-          'rack' => {
+          'http' => {
             'port' => 80,
             'host' => private_address
           }
