@@ -29,7 +29,7 @@ module RubyHelpers
   end
 
   def hash_to_shell_args(hash)
-    hash.map { |key, value| "#{key}=\"#{value}\"" }
+    hash.map { |key, value| "#{key}=#{value}" }
   end
 
   def dotenv_args

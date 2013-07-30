@@ -1,5 +1,5 @@
 define :relation_set do
-  args_string = hash_to_shell_args(params[:variables]).join(' ')
+  args_string = params[:variables].map { |key, value| "#{key}=\"#{value}\"" }.join(' ')
 
   execute "relation-set #{args_string}" do
     action :run

@@ -9,8 +9,8 @@ else
   rack_envfile "#{node[:rack][:root]}/shared/.env" do
     variables({
       memcache_servers: "#{memcached[:host]}:#{memcached[:port]}",
-      memcache_password: '',
-      memcache_username: ''
+      memcache_password: nil,
+      memcache_username: nil
     })
     user 'deploy'
     group 'deploy'

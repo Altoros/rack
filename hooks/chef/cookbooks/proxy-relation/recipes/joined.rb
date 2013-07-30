@@ -3,8 +3,8 @@ private_address = unit_get('private-address')
 relation_set do
   variables(
     port: 80,
-    hostname: unit_get('private-address'),
-    private_address: unit_get('private-address'),
+    hostname: private_address,
+    private_address: private_address,
     all_services: [
       {
         'service_name' => 'rack',

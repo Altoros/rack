@@ -102,7 +102,7 @@ ruby "1.9.3"
 
 ## Logstash setup
 
-You can add logstash service to collect information from application's logs and Kibana application to vizualize this data.
+You can add logstash service to collect information from application's logs and Kibana application to visualize this data.
 
 ```shell
 juju deploy kibana
@@ -113,6 +113,7 @@ juju deploy logstash-agent
 juju add-relation logstash-agent:input logstash-indexer:input
 juju add-relation logstash-agent:juju-info rack
 juju set logstash-agent CustomLogFile="['/var/log/rack/*.log', '/var/www/rack/shared/log/*.log']" CustomLogType="rack"
+juju expose kibana
 ```
 
 ## Horizontal scaling of Rack application
@@ -165,9 +166,9 @@ Apache2 charm expects a template to be passed in. Example of vhost that will bal
 
 ```xml
 <VirtualHost *:80>
-    ServerName rack
-    ProxyPass / balancer://rack/ lbmethod=byrequests stickysession=BALANCEID
-    ProxyPassReverse / balancer://rack/
+  ServerName rack
+  ProxyPass / balancer://rack/ lbmethod=byrequests stickysession=BALANCEID
+  ProxyPassReverse / balancer://rack/
 </VirtualHost>
 ```
 

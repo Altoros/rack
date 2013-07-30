@@ -31,17 +31,6 @@ private
   def juju_config_cache_path
     "/root/.juju_config_cache.yml"
   end
-
-
-  # def open_port(port)
-  #   run("open-port #{shell_quote(port)}")
-  # end
-
-
-  # def relation_set(params = {})
-  #   params_string = hash_to_shell_args(params).join(' ')
-  #   run("relation-set #{params_string}")
-  # end
 end
 
 module JujuHelpersDev

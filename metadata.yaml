@@ -10,7 +10,7 @@ description: |
 categories:
   - app-servers
 provides:
-  website:
+  proxy:
     interface: http
   nagios:
     interface: monitors
