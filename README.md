@@ -100,6 +100,21 @@ source "https://rubygems.org"
 ruby "1.9.3"
 ````
 
+## Logstash setup
+
+You can add logstash service to collect information from application's logs and Kibana application to vizualize this data.
+
+```shell
+juju deploy kibana
+juju deploy logstash-indexer
+juju add-relation kibana logstash-indexer:rest
+
+juju deploy logstash-agent
+juju add-relation logstash-agent:input logstash-indexer:input
+juju add-relation logstash-agent:juju-info sample-rails
+juju set logstash-agent CustomLogFile="['/var/log/rack/*.log', '/var/www/rack/shared/log/*.log']" CustomLogType="rack"
+```
+
 ## Horizontal scaling of Rack application
 
 Juju makes it easy to scale your Rack application. You can simply deploy any supported load balancer, add relation and launch any number of application instances. Here is HAProxy example:
