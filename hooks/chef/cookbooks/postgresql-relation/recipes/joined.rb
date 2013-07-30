@@ -1,3 +1,3 @@
-require 'securerandom'
-
-relation_set(database: "rack_#{SecureRandom.hex}")
+relation_set do
+  variables(database: "rack_#{SecureRandom.hex}")
+end

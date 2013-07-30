@@ -1,8 +1,8 @@
 require 'securerandom'
 
 mongodb = {
-  host: relation_get(:hostname),
-  port: relation_get(:port),
+  host: juju_relation['hostname'],
+  port: juju_relation['port'],
   database: "rack_#{SecureRandom.hex}"
 }
 
@@ -19,6 +19,10 @@ else
       host: mongodb[:host],
       port: mongodb[:port]
     })
+  end
+
+  executables do
+    action :export
   end
 
   service 'rack' do

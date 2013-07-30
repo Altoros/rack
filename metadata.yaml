@@ -27,3 +27,6 @@ requires:
   mongodb:
     interface: mongodb
     optional: true
+  memcached:
+    interface: memcache
+    optional: true

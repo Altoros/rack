@@ -1,6 +1,3 @@
-require 'etc'
-require 'foreman/procfile'
-
 actions :reverse_merge, :export
 
 attribute :procfile, kind_of: String

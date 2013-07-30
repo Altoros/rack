@@ -15,4 +15,4 @@ else
   recipe_name=$hook_name
 fi
 
-juju_chef-solo -o "recipe[juju::load_config],recipe[$cookbook_name::$recipe_name],recipe[juju::dump_config]"
+juju_chef-solo -o "recipe[juju::bootstrap],recipe[$cookbook_name::$recipe_name]"

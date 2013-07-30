@@ -15,7 +15,7 @@ define :bundle, action: :install do
     end
   end
 
-  ruby_version_string = run(wrap_bundle("cd #{params[:name]} && bundle platform --ruby")).chomp
+  ruby_version_string = run_with_wrap_bundle(["cd #{params[:name]}", "bundle platform --ruby"]).chomp
 
   if ruby_version_string == "No ruby version specified"
     ruby_version_string = run('rvm current')
@@ -38,7 +38,7 @@ define :bundle, action: :install do
     user params[:user]
   end
 
-  bundle_without = (%w(development production test) - [node[:rack][:rack_env]]).join(' ')
+  bundle_without = (%w(development production test).reject{ |env| env == node[:juju][:rack_env] }).join(' ')
 
   execute 'bundle install' do
     action :run

@@ -111,7 +111,7 @@ juju add-relation kibana logstash-indexer:rest
 
 juju deploy logstash-agent
 juju add-relation logstash-agent:input logstash-indexer:input
-juju add-relation logstash-agent:juju-info sample-rails
+juju add-relation logstash-agent:juju-info rack
 juju set logstash-agent CustomLogFile="['/var/log/rack/*.log', '/var/www/rack/shared/log/*.log']" CustomLogType="rack"
 ```
 
@@ -121,6 +121,7 @@ Juju makes it easy to scale your Rack application. You can simply deploy any sup
 
 ```shell
 juju deploy rack rack --config rack.yml
+juju deploy haproxy
 juju add-relation haproxy rack
 juju expose haproxy
 juju add-unit rack -n 2
@@ -197,6 +198,23 @@ Additionally you can run disk, mem, and swap checks with NRPE extension:
 juju deploy nrpe
 juju add-relation rack nrpe
 juju add-relation nrpe nagios
+```
+
+## Memcached relation
+
+Deploy Memcached service and relate it to Rack application:
+
+```shell
+juju deploy memcached
+juju add-relation memcached rack
+```
+
+Rack charm will set environment variables which you can use to configure your Memcache adapter. [Dalli](https://github.com/mperham/dalli) use those variables by default.
+
+```ruby
+MEMCACHE_PASSWORD    => xxxxxxxxxxxx
+MEMCACHE_SERVERS     => instance.hostname.net
+MEMCACHE_USERNAME    => xxxxxxxxxxxx
 ```
 
 ## Configuration

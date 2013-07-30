@@ -1,3 +1,5 @@
+require 'etc'
+
 def whyrun_supported?
   true
 end

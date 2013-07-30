@@ -1,9 +1,9 @@
 mysql = {
-  host: relation_get(:host),
-  database: relation_get(:database),
-  username: relation_get(:user),
-  password: relation_get(:password),
-  port: relation_get(:port)
+  host: juju_relation['host']
+  database: juju_relation['database']
+  username: juju_relation['user']
+  password: juju_relation['password']
+  port: juju_relation['port']
 }
 
 if %i(host database username password).any? { |attr| mysql[attr].nil? || mysql[attr].empty? }
@@ -23,6 +23,10 @@ else
       password: mysql[:password],
       port: mysql[:port]
     })
+  end
+
+  executables do
+    action :export
   end
 
   service 'rack' do
