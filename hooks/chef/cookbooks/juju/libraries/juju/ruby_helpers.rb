@@ -24,10 +24,6 @@ module RubyHelpers
     Shellwords.escape(value)
   end
 
-  def hex_random
-    SecureRandom.hex
-  end
-
   def hash_to_shell_args(hash)
     hash.map { |key, value| "#{key}=#{value}" }
   end

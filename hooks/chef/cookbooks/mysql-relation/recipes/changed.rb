@@ -1,8 +1,8 @@
 mysql = {
-  host: juju_relation['host']
-  database: juju_relation['database']
-  username: juju_relation['user']
-  password: juju_relation['password']
+  host: juju_relation['host'],
+  database: juju_relation['database'],
+  username: juju_relation['user'],
+  password: juju_relation['password'],
   port: juju_relation['port']
 }
 
@@ -11,7 +11,7 @@ if %i(host database username password).any? { |attr| mysql[attr].nil? || mysql[a
 else
   rack_envfile "#{node[:rack][:root]}/shared/.env" do
     variables({
-      database_url: "mysql2://#{mysql[:username]}:#{mysql[:password]}@#{mysql[:host]}:#{mysql[:port]}/#{mysql[:database]}?reconnect=true",
+      database_url: "mysql2://#{mysql[:username]}:#{mysql[:password]}@#{mysql[:host]}:#{mysql[:port]}/#{mysql[:database]}",
     })
     user 'deploy'
     group 'deploy'

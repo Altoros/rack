@@ -77,5 +77,7 @@ def user_env
         raise FormatError, "Pair #{pair.inspect} doesn't match format"
       end
     end
+  else
+    {}
   end
 end
