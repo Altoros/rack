@@ -1,4 +1,6 @@
-if node.default[:juju][:revision] != node.override[:juju][:revision]
+if (node.default[:juju][:revision] != node.override[:juju][:revision]) ||
+    (node.default[:juju][:env] != node.override[:juju][:env])
+
   service 'rack' do
     ignore_failure true
     provider Chef::Provider::Service::Upstart

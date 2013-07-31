@@ -45,14 +45,6 @@ On a step 3 run
     juju deploy mysql
     juju add-relation mysql rack
 
-#### Mongodb setup
-
-If you use Mongodb with Mongoid then on a step 3 you should run
-
-    juju deploy mongodb
-    juju add-relation mongodb rack
-
-
 ### Sinatra example
 
 1. Configure your application, for example html2haml
@@ -80,6 +72,12 @@ juju set <service_name> revision=<revision>
 
 ```shell
 juju ssh <unit_name> run <command>
+```
+
+## Restart application
+
+```bash
+juju ssh <unit_name> sudo restart rack
 ```
 
 ## Foreman integration
@@ -201,6 +199,41 @@ juju add-relation rack nrpe
 juju add-relation nrpe nagios
 ```
 
+## MongoDB relation
+
+Deploy MonogDB service and relate it to Rack application:
+
+    juju deploy mongodb
+    juju add-relation mongodb rack
+
+Rack charm will set environment variables which you can use to configure your Mongodb adapter.
+
+```ruby
+MONGODB_URL   => mongodb://host:port/database
+```
+
+### Use with Mongoid 2.x
+
+Your mongoid.yml should look like:
+
+```yml
+production:
+  uri: <%= ENV['MONGODB_URL'] %>
+```
+
+### Use with Mongoid 3.x and 4.x
+
+Your mongoid.yml should look like:
+
+```yml
+production:
+  sessions:
+    default:
+      uri: <%= ENV['MONGODB_URL'] %>
+```
+
+In both cases you can set additional options specified by Mongoid.
+
 ## Memcached relation
 
 Deploy Memcached service and relate it to Rack application:
@@ -216,6 +249,50 @@ Rack charm will set environment variables which you can use to configure your Me
 MEMCACHE_PASSWORD    => xxxxxxxxxxxx
 MEMCACHE_SERVERS     => instance.hostname.net
 MEMCACHE_USERNAME    => xxxxxxxxxxxx
+```
+
+## Redis relation
+
+Deploy Redis service and relate it to Rack application:
+
+```bash
+juju deploy redis-master
+juju add-relation redis-master:redis-master rack
+```
+
+Rack charm will set environment variables which you can use to configure your Redis adapter.
+
+```ruby
+REDIS_URL   => redis://username:password@my.host:6389
+```
+
+For example you can configure Redis adapter in config/initializers/redis.rb
+
+```ruby
+uri = URI.parse(ENV["REDIS_URL"])
+REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+```
+
+## Known issues
+
+### Rack application didn't start because assets were not compiled
+
+To be able to compile assets before you've joined database relation you have to disable initialize_on_precompile option in application.rb:
+
+```ruby
+config.assets.initialize_on_precompile = false
+```
+
+If you can't do this you still can join database and compile assets manually:
+
+```bash
+juju ssh rack/0 run rake assets:precompile
+```
+
+Then restart Rack service (while you have to replace 'rack/0' with your application name, e.g. 'sample-rails/0', 'sudo restart rack' is a valid command to restart any deployed application):
+
+```bash
+juju ssh rack/0 sudo restart rack
 ```
 
 ## Configuration

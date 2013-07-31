@@ -1,17 +1,14 @@
-require 'securerandom'
-
-mongodb = {
+redis = {
   host: juju_relation['hostname'],
   port: juju_relation['port'],
-  database: "rack_#{node[:juju][:rack_env]}"
 }
 
-if %i(host port).any? { |attr| mongodb[attr].nil? || mongodb[attr].empty? }
+if %i(host port).any? { |attr| redis[attr].nil? || redis[attr].empty? }
   puts "Waiting for all attributes being set."
 else
   rack_envfile "#{node[:rack][:root]}/shared/.env" do
     variables({
-      mongodb_url: "mongodb://#{mongodb[:host]}:#{mongodb[:port]}/#{mongodb[:database]}",
+      redis_url: "redis://#{redis[:host]}:#{redis[:port]}",
     })
     user 'deploy'
     group 'deploy'

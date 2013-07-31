@@ -18,6 +18,14 @@ end
   end
 end
 
+cookbook_file "#{node[:rack][:root]}/shared/config/database.yml" do
+  source 'database.yml'
+  cookbook 'rack'
+  owner 'deploy'
+  group 'deploy'
+  action :create
+end
+
 include_recipe 'rack::deploy'
 
 nginx_site 'rack' do

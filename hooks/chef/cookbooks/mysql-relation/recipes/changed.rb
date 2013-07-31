@@ -9,20 +9,14 @@ mysql = {
 if %i(host database username password).any? { |attr| mysql[attr].nil? || mysql[attr].empty? }
   puts "Waiting for all attributes being set."
 else
-  template "#{node[:rack][:root]}/shared/config/database.yml" do
-    cookbook 'rack'
-    owner 'deploy'
-    group 'deploy'
-    action :create
+  rack_envfile "#{node[:rack][:root]}/shared/.env" do
     variables({
-      rack_env: node[:juju][:rack_env],
-      adapter: 'mysql2',
-      database: mysql[:database],
-      host: mysql[:host],
-      username: mysql[:username],
-      password: mysql[:password],
-      port: mysql[:port]
+      database_url: "mysql2://#{mysql[:username]}:#{mysql[:password]}@#{mysql[:host]}:#{mysql[:port]}/#{mysql[:database]}?reconnect=true",
     })
+    user 'deploy'
+    group 'deploy'
+    mode '0644'
+    action :merge
   end
 
   executables do

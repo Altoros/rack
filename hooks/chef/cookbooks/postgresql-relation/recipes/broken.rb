@@ -1,5 +1,6 @@
-file "#{node[:rack][:root]}/shared/config/database.yml" do
-  action :delete
+rack_envfile "#{node[:rack][:root]}/shared/.env" do
+  delete_variables(%w(database_url))
+  action :delete_variables
 end
 
 executables do

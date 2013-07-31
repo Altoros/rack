@@ -1,5 +1,5 @@
 rack_envfile "#{node[:rack][:root]}/shared/.env" do
-  delete_variables(%w(database_url))
+  delete_variables(%w(redis_url))
   action :delete_variables
 end
 

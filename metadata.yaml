@@ -30,3 +30,6 @@ requires:
   memcached:
     interface: memcache
     optional: true
+  redis:
+    interface: redis
+    optional: true

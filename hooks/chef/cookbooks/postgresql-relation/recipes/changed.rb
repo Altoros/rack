@@ -9,20 +9,14 @@ postgresql = {
 if %i(host database username password).any? { |attr| postgresql[attr].nil? || postgresql[attr].empty? }
   puts "Waiting for all attributes being set."
 else
-  template "#{node[:rack][:root]}/shared/config/database.yml" do
-    cookbook 'rack'
-    owner 'deploy'
-    group 'deploy'
-    action :create
+  rack_envfile "#{node[:rack][:root]}/shared/.env" do
     variables({
-      rack_env: node[:juju][:rack_env],
-      adapter: 'postgresql',
-      database: postgresql[:database],
-      host: postgresql[:host],
-      username: postgresql[:username],
-      password: postgresql[:password],
-      port: postgresql[:port]
+      database_url: "postgres://#{postgresql[:username]}:#{postgresql[:password]}@#{postgresql[:host]}:#{postgresql[:port]}/#{postgresql[:database]}",
     })
+    user 'deploy'
+    group 'deploy'
+    mode '0644'
+    action :merge
   end
 
   executables do
