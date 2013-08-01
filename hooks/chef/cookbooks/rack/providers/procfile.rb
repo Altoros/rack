@@ -23,7 +23,9 @@ end
 
 action :export do
   converge_by("Export #{ @new_resource }") do
-    execute "foreman export -f #{ @new_resource.procfile || 'Procfile' } upstart /etc/init -u #{ @new_resource.user || 'deploy' } --app #{ @new_resource.app || 'rack'}" do
+    execute "foreman export --procfile #{ @new_resource.procfile || 'Procfile' } upstart /etc/init \
+    --user #{ @new_resource.user || 'deploy' } --app #{ @new_resource.app || 'rack'} \
+    --log #{node[:rack][:root]}/shared/log" do
       cwd new_resource.cwd
       action :run
     end

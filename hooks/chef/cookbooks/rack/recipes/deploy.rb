@@ -34,6 +34,7 @@ deploy_revision node[:rack][:root] do
   case node[:juju][:scm_provider]
     when 'git'
       branch node[:juju][:branch]
+      revision node[:juju][:revision]
       ssh_wrapper "/tmp/private_code/wrap-ssh.sh"
     when 'svn'
       revision node[:juju][:revision]

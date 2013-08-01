@@ -108,9 +108,9 @@ juju deploy logstash-indexer
 juju add-relation kibana logstash-indexer:rest
 
 juju deploy logstash-agent
-juju add-relation logstash-agent:input logstash-indexer:input
-juju add-relation logstash-agent:juju-info rack
-juju set logstash-agent CustomLogFile="['/var/log/rack/*.log', '/var/www/rack/shared/log/*.log']" CustomLogType="rack"
+juju add-relation logstash-agent logstash-indexer
+juju add-relation logstash-agent rack
+juju set logstash-agent CustomLogFile="['/var/www/rack/current/log/*.log']" CustomLogType="rack"
 juju expose kibana
 ```
 
@@ -297,42 +297,47 @@ juju ssh rack/0 sudo restart rack
 
 ## Configuration
 
-List of available options:
+### Deploy from Git
 
-    options:
-      repo:
-        type: string
-        default: "https://github.com/pavelpachkovskij/sample-rails.git"
-        description: Application repository URL
-      branch:
-        type: string
-        default: master
-        description: Application branch name (git only).
-      revision:
-        type: string
-        default: HEAD
-        description: "The revision to be checked out. This can be symbolic, like HEAD or it can be a source control management-specific revision identifier. Default value: HEAD."
-      scm_provider:
-        type: string
-        default: git
-        description: The name of the source control management provider to be used (git or svn).
-      deploy_key:
-        type: string
-        default: ""
-        description: A deploy key is an SSH key that is stored on the server and grants access to a repository (git only).
-      svn_username:
-        type: string
-        default: ""
-        description: The password for the user that has access to the Subversion repository (svn only).
-      svn_password:
-        type: string
-        default: ""
-        description: The user name for a user that has access to the Subversion repository (svn only).
-      rack_env:
-        type: string
-        default: production
-        description: Both RACK_ENV and RAILS_ENV environment variables.
-      extra_packages:
-        type: string
-        default:
-        description: Extra packages to install before bundle install
+Sample Git config:
+
+```yml
+rack:
+  repo: <repository_url>
+  branch: <branch_name>
+```
+
+To deploy from private repo via SSH add 'deploy_key' option:
+
+```yml
+deploy_key: <private_key>
+```
+
+### Deploy from SVN
+
+Sample SVN config:
+
+```yml
+rack:
+  scm_provider: svn
+  repo: <repository_url>
+  revision: <branch_name>
+  svn_username: <username>
+  svn_password: <password>
+```
+
+### Install extra packages
+
+Specify list of packages separated by spaces:
+
+```yml
+  extra_packages: 'libsqlite3++-dev libmagick++-dev'
+```
+
+### Set ENV variables
+
+You can set ENV variables, which will be available within all processes defined in a Procfile:
+
+```yml
+  env: 'AWS_ACCESS_KEY_ID=aws_access_key_id AWS_SECRET_ACCESS_KEY=aws_secret_access_key'
+```

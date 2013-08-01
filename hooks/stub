@@ -10,7 +10,7 @@ hook_name=$(basename $0)
 if [[ "$hook_name" == *-relation-* ]]; then
   cookbook_name="${hook_name%-relation*}-relation"
   recipe_name=${hook_name#*relation-}
-else
+  else
   cookbook_name='rack'
   recipe_name=$hook_name
 fi
