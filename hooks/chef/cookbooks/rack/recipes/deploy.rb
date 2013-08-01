@@ -29,7 +29,6 @@ deploy_revision node[:rack][:root] do
   group 'deploy'
 
   symlink_before_migrate({'config/database.yml' => 'config/database.yml',
-                          'config/mongoid.yml' => 'config/mongoid.yml',
                           '.env' => '.env'})
 
   case node[:juju][:scm_provider]
