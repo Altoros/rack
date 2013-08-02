@@ -38,7 +38,6 @@ module JujuHelpersDev
     {
       repo: 'https://github.com/pavelpachkovskij/octopress',
       scm_provider: 'git',
-      branch: 'public',
       revision: 'public',
       rack_env: 'development',
     }

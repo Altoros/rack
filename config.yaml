@@ -3,14 +3,10 @@ options:
     type: string
     default:
     description: Application repository URL
-  branch:
-    type: string
-    default: HEAD
-    description: Application branch name (git only).
   revision:
     type: string
     default: HEAD
-    description: "The revision to be checked out. This can be symbolic, like HEAD or it can be a source control management-specific revision identifier (svn only)."
+    description: "The revision to be checked out. This can be symbolic, like HEAD or it can be a source control management-specific revision identifier."
   scm_provider:
     type: string
     default: git
