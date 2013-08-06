@@ -245,7 +245,7 @@ production:
   uri: <%= ENV['MONGODB_URL'] %>
 ```
 
-## Mongoid 3.x and 4.x
+## Mongoid 3.x
 
 Your mongoid.yml should look like:
 
