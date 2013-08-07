@@ -113,12 +113,12 @@ Example Procfile:
 
 ## Specifying a Ruby Version
 
-You can use the ruby keyword of your app’s Gemfile to specify a particular version of Ruby.
+You can use the ruby keyword of your app's Gemfile to specify a particular version of Ruby.
 
 ```ruby
 source "https://rubygems.org"
 ruby "1.9.3"
-````
+```
 
 # Horizontal scaling
 
